@@ -1,0 +1,114 @@
+{% extends 'base/main.html' %}
+
+{% block title %}All Issued Book{% endblock title %}
+
+
+{% block content %}
+
+<div class="container-fluid mt-5">
+    <h3 class="m-4">All Issued Book</h3>
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+            <div class="alert alert-dismissible alert-success">
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            </div>
+          {% endfor %}
+      </ul>
+    {% endif %}
+    <div class="row">
+        <div class="col-12">
+          {% if ibs_obj %}
+            <div class="card text-white bg-primary ms-4 mr-4 mt-4 mb-4">
+                <div class="card-header">All Issued Book</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Borrower</th>
+                                <th scope="col">Book Title</th>
+                                <th scope="col">Issue Date</th>
+                                <th scope="col">Expired Date</th>
+                                <th scope="col">Fine Per Day</th>
+                                <th scope="col">Total Fine</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% for ib in ibs_obj %}
+                              <tr class="table-primary">
+                                <td>{{ib.borrower}}</td>
+                                <td>{{ib.book.title}}</td>
+                                <td>{{ib.issue_date}}</td>
+                                <td>{{ib.expired_date}}</td>
+                                <td>{{ib.fine_per_day}}</td>
+                                <td>{{ib.get_total_fine}}</td>
+                                <td>
+                                  <a href="{% url 'edit_issued_book' ib.id %}"><i class="fa-solid fa-pen btn btn-warning"></i></a>
+                                  
+
+                                  <a href="" data-bs-toggle="modal" data-bs-target="#deleteBook{{ib.id}}"><i class="fa-solid fa-trash btn btn-danger"></i></a>
+                                  <!-- delete modal -->
+                                  {% include 'base/delete_issued_book_confirm.html' %}
+                                  <!-- end delete modal -->
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                  </p>
+                </div>
+              </div>
+              {% comment %} {% else %}
+              <h5 class="alert alert-primary">No issued book record</h5>
+              {% endif %} {% endcomment %}
+        </div>
+        {% else %}
+              <h5 class="alert alert-primary">No Issued book record</h5>
+        {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        
+        {% if paginator.num_pages > 1 %}
+        <div class="m-4">
+          <ul class="pagination">
+            {% if ibs_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ibs_obj.previous_page_number}}">&laquo;</a>
+            </li>
+            {% endif %}
+
+            {% for page in paginator.page_range %}
+              {% if page == ibs_obj.number %}
+                <li class="page-item active">
+                  <a class="page-link" href="?page={{page}}">{{page}}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{page}}">{{page}}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            
+            {% if ibs_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ibs_obj.next_page_number}}">&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+        <!-- End of pagination -->
+        
+    </div>
+
+</div>
+
+{% endblock content %}
+
+

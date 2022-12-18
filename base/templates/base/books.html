@@ -1,0 +1,126 @@
+{% extends 'base/main.html' %}
+
+
+{% block title %}All Book{% endblock title %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+  
+  <h3 class="m-4">All Book <a href="{% url 'add_book' %}"><i class="fa-solid fa-plus mt-5"></i></a></h3>
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+          <div class="alert alert-dismissible alert-success">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+          </div>
+        {% endfor %}
+    </ul>
+  {% endif %}
+    <div class="row">
+        <div class="col-12">
+            {% if books_obj %}
+
+            <div class="card text-white bg-primary ms-4 mr-4 mt-4 mb-4">
+                <div class="card-header">All Book</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">ISBN</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Is Referrence Only</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% for book in books_obj %}
+                              <tr class="table-primary">
+                                <td>{{book.isbn}}</td>
+                                <td>{{book.title}}</td>
+                                <td>{{book.author}}</td>
+                                <td>{{book.category}}</td>
+                                <td>{{book.is_referrence_only}}</td>
+                                <td>{{book.status}}</td>
+                                {% if request.user.is_staff %}
+                                <td>
+                                  <a href="{% url 'single_book' book.id %}" data-bs-toggle="modal" data-bs-target="#viewBook{{book.id}}"><i class="fa-solid fa-circle-info btn btn-primary"></i></a>
+
+                                  <!-- Include view boook modal -->
+                                  {% include 'base/view_book_modal.html' %}
+                                  <!-- End view book modal -->
+
+                                  <a href="{% url 'edit_book' book.id %}"><i class="fa-solid fa-pen btn btn-warning"></i></a>
+                                  
+                                
+                                  {% if not book.status == 'loned' and not book.is_referrence_only  %}
+                                  <a href="{% url 'issue_book' book.id %}"><i class="fa-solid fa-paper-plane btn btn-info"></i></a>
+                                  {% endif %}
+
+                                  <a href="" data-bs-toggle="modal" data-bs-target="#deleteBook{{book.id}}"><i class="fa-solid fa-trash btn btn-danger"></i></a>
+                                  <!-- delete modal -->
+                                  {% include 'base/delete_book_modal.html' %}
+                                  <!-- end delete modal -->
+                                </td>
+                                {% endif %}
+                              </tr>
+                            {% endfor %}
+
+                            </tbody>
+                          </table>
+                        </div>
+                  </p>
+                </div>
+              </div>
+              {% else %}
+              <h5 class="alert alert-primary">No book record</h5>
+              {% endif %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+
+    {% if paginator.num_pages > 1 %}
+    <div class="m-4">
+      <ul class="pagination">
+        {% if books_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{books_obj.previous_page_number}}">&laquo;</a>
+        </li>
+        {% endif %}
+        {% for page in paginator.page_range %}
+        {% if page == books_obj.number %}
+        <li class="page-item active">
+          <a class="page-link" href="?page={{page}}">{{page}}</a>
+        </li>
+        {% else %}
+        
+        <li class="page-item">
+          <a class="page-link" href="?page={{page}}">{{page}}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if books_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{books_obj.next_page_number}}">&raquo;</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+    {% endif %}
+    <!-- End of pagination -->
+                              
+{% endblock content %}
+
+
+
+
+

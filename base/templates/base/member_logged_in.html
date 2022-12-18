@@ -1,0 +1,56 @@
+{% extends 'base/main.html' %}
+
+{% block title %}All Issued Book{% endblock title %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <h3 class="m-4">All borrowed books</h3>
+    <div class="row">
+        <div class="col-12">
+            <div class="card text-white bg-primary ms-4 mr-4 mt-4 mb-4">
+                <div class="card-header">All borrowed books</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Borrower</th>
+                                <th scope="col">Book Title</th>
+                                <th scope="col">Issue Date</th>
+                                <th scope="col">Expired Date</th>
+                                <th scope="col">Fine Per Day</th>
+                                <th scope="col">Total Fine</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% for book in books %}
+                              <tr class="table-primary">
+                                <td>{{book.borrower.name}}</td>
+                                <td>{{book.book.title}}</td>
+                                <td>{{book.issue_date}}</td>
+                                <td>{{book.expired_date}}</td>
+                                <td>{{book.fine_per_day}}</td>
+                                <td>{{book.get_total_fine}}</td>
+                              </tr>
+                              {% endfor %}
+
+                            </tbody>
+                          </table>
+                        </div>
+                  </p>
+                </div>
+              </div>
+              {% comment %} {% else %}
+              <h5 class="alert alert-primary">No issued book record</h5>
+              {% endif %} {% endcomment %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+

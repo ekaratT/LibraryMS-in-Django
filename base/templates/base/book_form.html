@@ -1,0 +1,100 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<div class="container h-100 d-flex align-item-center justify-content-center mt-5">
+  <form action="" method="POST" class="col-5 mt-5">
+    {% csrf_token %}
+    {% if page == 'add_book' %}
+    <h3>Add Book</h3>
+    <div class="form-group">
+      <label for="isbn" class="form-label mt-4">ISBN</label>
+      {{form.isbn}}
+    </div>
+    <div class="form-group">
+      <label for="title" class="form-label mt-4">Title</label>
+      {{form.title}}
+    </div>
+
+    <div class="form-group">
+      <label for="title" class="form-label mt-4">Author</label>
+      <input class="form-select" type="text" name="author" list="author-list">
+      <datalist id="author-list">
+        <select id="author-name">
+          {% for author in authors %}
+            <option value="{{author}}">{{author}}</option>
+          {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    <div class="form-group">
+      <label for="category" class="form-label mt-4">Category</label>
+      <input class="form-select" type="text" name="category" list="category-list">
+      <datalist id="category-list">
+        <select id="category-name">
+          {% for category in categories %}
+            <option value="{{category}}">{{category}}</option>
+          {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    <div class="form-group">
+      <label for="is_referrence_only" class="form-label mt-4">Is Referrence Only</label>
+      {{form.is_referrence_only}}
+    </div>
+
+    <div class="form-group">
+      <label for="status" class="form-label mt-4">Status</label>
+      {{form.status}}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Book</button>
+    {% else %}
+
+
+
+    <h3>Update Book</h3>
+    {{form}}
+    <button type="submit" class="btn btn-primary">Save Change</button>
+    {% endif %}
+  </form>
+</div>
+
+
+
+
+
+<!-- Back up -->
+
+<!-- <div class="container h-100 d-flex align-item-center justify-content-center mt-5">
+  <form action="" method="POST" class="col-5 mt-5">
+    {% csrf_token %}
+    {% if page == 'add_book' %}
+    <h3>Add Book</h3>
+    {{form}}
+    <div class="form-group">
+      <label for="isbn" class="form-label mt-4">ISBN</label>
+      {{form.isbn}}
+    </div>
+    <div class="form-group">
+      <label for="title" class="form-label mt-4">Title</label>
+      {{form.title}}
+    </div>
+    <div class="form-group">
+      <label for="title" class="form-label mt-4">Author</label>
+      <input type="text" name="author" list="author-list">
+      {{form.title}}
+    </div>
+    <button type="submit" class="btn btn-primary">Add Book</button>
+    {% else %}
+    <h3>Update Book</h3>
+    {{form}}
+    <button type="submit" class="btn btn-primary">Save Change</button>
+    {% endif %}
+  </form>
+</div> -->
+
+
+{% endblock content %}

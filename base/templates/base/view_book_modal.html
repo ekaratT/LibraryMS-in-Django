@@ -1,0 +1,25 @@
+<div class="modal" id="viewBook{{book.id}}" tabindex="-1" aria-labelledby="viewBookLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{book.title}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-unstyled">
+            <li><strong>ISBN : </strong><span>{{book.isbn}}</span></li>
+            <li><strong>Title : </strong><span>{{book.title}}</span></li>
+            <li><strong>Author : </strong><span>{{book.author}}</span></li>
+            <li><strong>Category : </strong><span>{{book.category}}</span></li>
+            <li><strong>Is referrence only : </strong><span>{{book.is_referrence_only}}</span></li>
+            <li><strong>Status : </strong><span>{{book.status}}</span></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+      </i><title>Register</title>
+  </head>
+  <body>
+    {% if page == 'register' %}
+
+    <!--================== Register member page ==================-->
+    <div
+      class="container h-100 d-flex align-item-center justify-content-center">
+      <form action="" method="POST" class="col-5 mt-5">
+        {% csrf_token %}
+        <h3 class="mb-4">Register Member</h3>
+        {% for field in form %}
+        <div class="form-outline mb-4">
+          {{field}}
+          <label for="" class="form-label">{{field.label}}</label>
+        </div>
+
+       {% endfor %}
+          <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+      </form>
+    </div>
+
+    <!--=============== End of Register member page ===============-->
+
+    {% elif page == 'edit' %}
+    <!--=================== Edit member page ===================-->
+    <div
+      class="container h-100 d-flex align-item-center justify-content-center">
+      <form action="" method="POST" class="col-5 mt-5">
+        {% csrf_token %}
+        <h3 class="mb-4">Edit Member</h3>
+        {% for field in form %}
+        <div class="form-outline mb-4">
+          <label for="" class="form-label">{{field.label}}</label>
+          {{field}}
+        </div>
+
+       {% endfor %}
+          <button type="submit" class="btn btn-primary btn-block mb-4">Save Change</button>
+      </form>
+    </div>
+    <!--=============== End of Edit member page ===============-->
+
+    {% else %}
+    <!--==================== Login page ====================-->
+    
+    <div class="container h-100 d-flex align-item-center justify-content-center">
+      <form action="" method="POST" class="col-5 mt-5">
+        {% csrf_token %}
+
+        <!-- Showing the message -->
+        {% if messages %}
+          <span class="messages col-5">
+              {% for message in messages %}
+                <div class="alert alert-dismissible alert-{{message.tags}}">
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  <span {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</span>
+                </div>
+              {% endfor %}
+          </span>  
+        {% endif %}
+        <!-- End of showing the message -->
+        
+        <h3 class="mb-4">Login</h3>
+        <div class="form-outline mb-4">
+          <input
+            type="text"
+            id="username-form-input"
+            name="username"
+            class="form-control" />
+          <label for="username-form-input" class="form-label">Username</label>
+        </div>
+        <div class="form-outline mb-4">
+          <input
+            type="password"
+            id="password-form-input"
+            name="password"
+            class="form-control" />
+          <label for="password-form-input" class="form-label">Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Log In</button>
+        {% comment %} <div class="text-center mb-4">
+          <a href="">Forgot Password?</a>
+        </div> {% endcomment %}
+        <div class="text-center">
+          <p>Not a member? <a href="{% url 'register' %}">Register</a></p>
+        </div>
+      </form>
+    </div>
+    <!--==================== End of Login page ====================-->
+
+    {% endif %}
+    <script src="{% static 'js/jquery-3.6.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+  </body>
+</html>

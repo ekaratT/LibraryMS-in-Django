@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <title>LibraryManagementSystem in Django</title>
+</head>
+<div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('static/images/bg.jpg')">
+    <div class="hero-text">
+      <h1 style="font-size:50px">Library Management System</h1>
+      <a href="{% url 'login' %}" class="btn btn-lg btn-light mt-5">Login</a>
+    </div>
+  </div>
+</body>
+</html>

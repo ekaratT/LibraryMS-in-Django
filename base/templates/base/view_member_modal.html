@@ -1,0 +1,25 @@
+<div class="modal" id="viewMember{{member.id}}" tabindex="-1" aria-labelledby="viewMemberLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{member.member.username}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-unstyled">
+            <li><strong>Username : </strong><span>{{member.member.username}}</span></li>
+            <li><strong>Name : </strong><span>{{member.name}}</span></li>
+            <li><strong>Email : </strong><span>{{member.email}}</span></li>
+            <li><strong>Membership Date : </strong><span>{{member.membership_date}}</span></li>
+            <li><strong>Borrowed Book : </strong><span>{{member.issuebook_set.all.count}}</span></li>
+            <li><strong>Account Status : </strong><span>{{member.membership_status}}</span></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

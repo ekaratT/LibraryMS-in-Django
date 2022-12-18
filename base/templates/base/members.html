@@ -1,0 +1,122 @@
+{% extends 'base/main.html' %}
+
+{% block title %}All Member{% endblock title %}
+
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+    <h3 class="m-4">All Member <a href="{% url 'register' %}"><i class="fa-solid fa-plus mt-5"></i></a></h3>
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+            <div class="alert alert-dismissible alert-success">
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            </div>
+          {% endfor %}
+      </ul>
+    {% endif %}
+    <div class="row">
+        <div class="col-12">
+            {% if member_obj %}
+            <div class="card text-white bg-primary ms-4 mr-4 mt-4 mb-4">
+                <div class="card-header">All Member</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Date Of Membership</th>
+                                <th scope="col">Account Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% for member in member_obj %}
+                              <tr class="table-primary">
+                                <td>{{member.name}}</td>
+                                <td>{{member.email}}</td>
+                                <td>{{member.membership_date}}</td>
+                                <td>{{member.membership_status}}</td>
+                                <td>
+                                  <a href="{% url 'single_member' member.id %}" data-bs-toggle="modal" data-bs-target="#viewMember{{member.id}}"><i class="fa-solid fa-circle-info btn btn-primary"></i></a>
+                                  <!-- <a href="{% url 'single_member' member.id %}"><i class="fa-solid fa-circle-info btn btn-primary"></i></a> -->
+
+                                  <!-- Include view member modal -->
+                                  {% include 'base/view_member_modal.html' %}
+                                  <!-- End view member modal -->
+
+                                  <a href="{% url 'edit_member' member.id %}"><i class="fa-solid fa-pen btn btn-warning"></i></a>
+
+                                  
+                                  <a href="" data-bs-toggle="modal" data-bs-target="#deleteMember{{member.id}}"><i class="fa-solid fa-trash btn btn-danger"></i></a>
+
+                                  <!-- Include delete member modal -->
+                                  {% include 'base/delete_member_modal.html' %}
+                                  <!-- End delete member modal -->
+
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                  </p>
+                </div>
+              </div>
+              {% else %}
+              <h5 class="alert alert-primary">No member record</h5>
+              {% endif %}
+        </div>
+    </div>
+
+
+    <!-- Pagination -->
+
+    {% if paginator.num_pages > 1 %}
+    <div class="m-4">
+      <ul class="pagination">
+        {% if member_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{member_obj.previous_page_number}}">&laquo;</a>
+        </li>
+        {% endif %}
+
+        {% for page in paginator.page_range %}
+          {% if page == member_obj.number %}
+            <li class="page-item active">
+              <a class="page-link" href="?page={{page}}">{{page}}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{page}}">{{page}}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        
+        {% if member_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{member_obj.next_page_number}}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+    {% endif %}
+    <!-- End of pagination -->
+
+
+</div>
+
+
+
+
+
+{% endblock content %}
+
+
